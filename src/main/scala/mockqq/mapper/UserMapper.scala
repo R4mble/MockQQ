@@ -2,7 +2,7 @@ package mockqq.mapper
 
 import mockqq.entity.ChatUser
 import mockqq.model.NewUser
-import org.apache.ibatis.annotations.{Delete, Insert, Select}
+import org.apache.ibatis.annotations.{Delete, Insert, Select, Update}
 
 
 trait UserMapper {
@@ -16,5 +16,6 @@ trait UserMapper {
   @Select(Array("select * from chat_user where id = #{id}"))
   def get(id: Long): Boolean
 
+  @Update(Array("<script> update chat_user set <if test='name!=null'> name=#{name} </if> where id = #{id} </script>"))
   def update(user: ChatUser): Boolean
 }

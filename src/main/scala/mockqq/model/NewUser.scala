@@ -1,6 +1,14 @@
 package mockqq.model
 
-import javax.validation.constraints.{Email, NotNull}
+import javax.validation.constraints.{Email, NotBlank}
+import lombok.Data
+import org.springframework.context.annotation.Bean
 
-case class NewUser(@NotNull @Email email: String,
-                   @NotNull password: String)
+import scala.beans.BeanProperty
+
+class NewUser {
+  @NotBlank @Email
+  var email: String = _
+  @NotBlank
+  var password: String = _
+}

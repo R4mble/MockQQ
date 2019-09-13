@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.{PostMapping, RequestBody, Reques
 
 @RestController
 @RequestMapping(Array("/user"))
-class UserController @Autowired()(private val userService: UserService){
+class UserController{
+
+  @Autowired
+  private var userService: UserService = _
 
   @PostMapping(Array("/register"))
   def register(@Valid @RequestBody user: NewUser): Boolean = {
