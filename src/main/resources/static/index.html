@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.js"></script>
+    <script src="http://cdn.bootcss.com/stomp.js/2.3.3/stomp.js"></script>
+</head>
+<body class="test">
+<script>
+
+	var url = 'http://localhost:9999/endpoint'
+	var socket = new SockJS(url, undefined, {transports: ['websocket']});  
+	var stompClient = Stomp.over(socket); 
+
+	// 第一个参数Map是请求的头信息，第二个参数是请求成功回调函数，第三个函数是请求失败回调函数
+	stompClient.connect({}, function(frame) { 
+		console.log("-----connected----");
+		stompClient.subscribe("/topic/chat", handle);
+	    sendMessage();
+	}, function(error){
+    	console.log(error.headers.message)
+	});
+	  
+	function handle(result){
+		console.log("received:", result);
+	}
+
+	function sendMessage(){
+		var message = JSON.stringify({"name":"黄盖"})
+		stompClient.send("/app/chat",{},message);
+	}
+</script>
+<input type="text" id="display"/>
+</body>
+</html>

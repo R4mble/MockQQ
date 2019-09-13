@@ -1,17 +1,16 @@
 package mockqq
 
+import org.mybatis.spring.annotation.MapperScan
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.web.bind.annotation.{GetMapping, RestController}
+import org.springframework.boot.autoconfigure.domain.EntityScan
+import org.springframework.web.bind.annotation.RestController
 
 @SpringBootApplication
 @RestController
-class Application {
-  @GetMapping(Array("/"))
-  def hello(): String = {
-     "Hello, Scala"
-  }
-}
+@EntityScan(Array("mockqq.entity"))
+@MapperScan(Array("mockqq.mapper"))
+class Application
 
 object Application extends App {
   SpringApplication.run(classOf[Application])

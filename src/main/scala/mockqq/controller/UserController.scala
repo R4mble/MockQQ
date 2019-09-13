@@ -1,14 +1,18 @@
 package mockqq.controller
 
-import org.springframework.web.bind.annotation.{PostMapping, RequestMapping, RestController}
+import javax.validation.Valid
+import mockqq.model.NewUser
+import mockqq.service.UserService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.{PostMapping, RequestBody, RequestMapping, RestController}
 
 @RestController
 @RequestMapping(Array("/user"))
-class UserController {
+class UserController @Autowired()(private val userService: UserService){
 
   @PostMapping(Array("/register"))
-  def register(): String = {
-    ""
+  def register(@Valid @RequestBody user: NewUser): Boolean = {
+    userService.save(user)
   }
 
   @PostMapping(Array("/login"))
